@@ -52,6 +52,15 @@ Les applis de carburant montrent la station la moins chère… sans dire si le d
 - Laravel sert de relais et de cache aux trois API ; la carte en Leaflet + tuiles OpenStreetMap (attribution affichée).
 - Mise en ligne sur Coolify à chaque push sur la branche principale.
 
+### Décisions prises pendant la construction
+
+- **Pas de nom de station** : le flux officiel ne donne ni le nom ni l'enseigne ; les stations sont désignées par leur adresse.
+- **Adresses** : l'API Adresse de data.gouv.fr redirige désormais vers la Géoplateforme de l'IGN (`data.geopf.fr/geocodage`), appelée directement.
+- **Référence** : « sur le trajet » = détour de 1 km au plus (500 m de chaque côté).
+- **Trajet** : 150 km au plus à vol d'oiseau ; au-delà, c'est le bonus « long trajet ».
+- **Itinéraires** : 40 stations au plus envoyées à OSRM (présélection par coût estimé, plus les plus proches).
+- **Cache** : les données brutes des API sont mises en cache (Laravel 13 refuse de relire des objets PHP depuis le cache).
+
 ## 5. Critères de réussite
 
 - [ ] Le gain net affiché se retrouve à la main sur un exemple (calcul documenté dans le README).

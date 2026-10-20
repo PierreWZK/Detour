@@ -18,5 +18,8 @@
     "name": "detour",
     "engines": {
         "node": ">=22"
+    },
+    "dependencies": {
+        "leaflet": "^1.9.4"
     }
 }

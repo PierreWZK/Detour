@@ -37,7 +37,7 @@
                 <a href="{{ route('home') }}#calcul">Le calcul</a>
                 <a href="{{ route('home') }}#donnees">Les données</a>
             </nav>
-            <a href="{{ route('home') }}#bientot" class="btn small">Trouver ma station</a>
+            <a href="{{ route('search') }}" class="btn small">Trouver ma station</a>
         </div>
     </header>
 

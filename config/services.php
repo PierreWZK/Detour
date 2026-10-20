@@ -2,6 +2,9 @@
 
 return [
 
+    // Fichier de certificats pour les appels HTTPS, si PHP n'en a pas (développement sous Windows)
+    'http_ca_bundle' => env('HTTP_CA_BUNDLE'),
+
     /*
     |--------------------------------------------------------------------------
     | Third Party Services

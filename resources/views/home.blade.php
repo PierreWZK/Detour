@@ -17,7 +17,7 @@
                 brûlé pour y aller.
             </p>
             <div class="row">
-                <a href="#bientot" class="btn">Trouver ma station</a>
+                <a href="{{ route('search') }}" class="btn">Trouver ma station</a>
                 <a href="#calcul" class="btn ghost">Comment on calcule</a>
             </div>
             <ul class="trust">
@@ -158,15 +158,15 @@
         </ul>
     </section>
 
-    {{-- Bientôt : la recherche --}}
-    <section class="band container" id="bientot">
+    {{-- Appel final --}}
+    <section class="band container">
         <div class="cta card">
             <div>
-                <p class="eyebrow">Bientôt</p>
-                <h2>La recherche arrive</h2>
-                <p class="lead">Position, plein, verdict : l'outil est en cours de construction. La page se mettra à jour dès qu'il sera prêt.</p>
+                <p class="eyebrow">À vous</p>
+                <h2>Où faire le plein aujourd'hui ?</h2>
+                <p class="lead">Votre position, votre plein, et le verdict en quelques secondes. Sans compte, sans application à installer.</p>
             </div>
-            <a href="https://github.com/PierreWZK/Detour" class="btn ghost" target="_blank" rel="noopener">Suivre le projet ↗</a>
+            <a href="{{ route('search') }}" class="btn">Trouver ma station</a>
         </div>
     </section>
 @endsection
