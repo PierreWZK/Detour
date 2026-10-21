@@ -20,6 +20,26 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Détour · aperçu du site">
     <meta name="twitter:card" content="summary_large_image">
+    @if (request()->routeIs('home'))
+    {{-- Données structurées pour les moteurs de recherche (@@ échappe le @ de Blade) --}}
+    <script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@@type": "WebApplication",
+      "name": "Détour",
+      "url": "https://detour.projectp.fr/",
+      "description": "Le plein moins cher, détour compris : le gain net de chaque station-service, l'économie sur le plein moins le carburant du détour. Prix officiels du jour, itinéraires réels.",
+      "applicationCategory": "TravelApplication",
+      "operatingSystem": "Web",
+      "inLanguage": "fr",
+      "isAccessibleForFree": true,
+      "offers": { "@@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+      "image": "https://detour.projectp.fr/og.png",
+      "author": { "@@type": "Person", "name": "PierreWZK", "url": "https://github.com/PierreWZK" },
+      "isPartOf": { "@@type": "WebSite", "name": "ProjectP", "url": "https://projectp.fr/" }
+    }
+    </script>
+    @endif
     <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
