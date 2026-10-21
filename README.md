@@ -1,6 +1,8 @@
 # Détour · Le plein moins cher, détour compris
 
-> Jour 08 du défi **30 jours, 30 projets** · Laravel · Leaflet · Open data · 🚧 **En construction** (recherche fonctionnelle en local, mise en ligne à venir)
+> Jour 08 du défi **30 jours, 30 projets** · Laravel · Leaflet · Open data · 🟢 **En ligne : [detour.projectp.fr](https://detour.projectp.fr)**
+
+![Page d'accueil de Détour](docs/preview.png)
 
 Les applis de carburant montrent la station la moins chère… sans dire si le détour vaut le coup. **Détour** calcule le **gain net** de chaque station : l'économie sur le plein, moins le carburant brûlé (et, si on veut, le temps perdu) pour y aller. Il répond simplement : « Allez à 18 bd de la Rocade, Annecy : +2,93 € net pour 10 minutes de détour ».
 
@@ -88,7 +90,16 @@ tests/                   Unit : le calcul ; Feature : la vitrine, la recherche e
 
 ## Mise en ligne
 
-Prévue sur Coolify : **https://detour.projectp.fr**.
+Sur Coolify : **https://detour.projectp.fr**, redéployé à chaque push sur `master`.
+
+| Réglage | Valeur |
+| --- | --- |
+| Build pack | Nixpacks (PHP 8.4 + Node 22), commande de build `npm run build` |
+| nginx | [`nginx.template.conf`](nginx.template.conf), modèle lu par Nixpacks |
+| Après chaque déploiement | `php artisan optimize` |
+| Variables | `APP_KEY`, `APP_ENV=production`, `APP_DEBUG=false`, `APP_URL`, `SESSION_DRIVER=file`, `CACHE_STORE=file`, `LOG_CHANNEL=stderr`, `NIXPACKS_PHP_ROOT_DIR=/app/public`, `NIXPACKS_PHP_FALLBACK_PATH=/index.php`, `NIXPACKS_NODE_VERSION=22` |
+
+Pas de base de données : le cache (prix, itinéraires, juste prix du jour) est en fichiers et repart de zéro à chaque déploiement.
 
 ## Stack
 
