@@ -16,9 +16,20 @@ Les applis de carburant montrent la station la moins chère… sans dire si le d
 - Prix périmés (plus de 48 h) signalés, stations en rupture écartées.
 - Fiche de chaque station : détail du calcul, prix de tous les carburants, horaires, automate 24/24, services.
 - Suggestions d'adresses pendant la frappe, bouton « Ma position », profil du plein retenu sur l'appareil.
+- Sans destination, chaque station est comparée à la plus proche : seul le trajet **en plus** de l'aller-retour vers la plus proche est compté.
+- La carte ne montre que les meilleures stations (celles qui rapportent et la référence) ; la liste les garde toutes.
 - Une API en panne donne un message clair, jamais une page blanche.
 
 Le flux officiel ne donne pas le **nom** des stations (ni l'enseigne) : elles sont désignées par leur adresse.
+
+## 🔥 Jeu du jour (`/jeu`)
+
+Deux défis par jour, les mêmes pour tout le monde, une tentative chacun, sans compte (série retenue sur l'appareil) :
+
+- **⛽ Le juste prix** : deviner le prix moyen du gazole en France aujourd'hui. La réponse est la moyenne des stations mises à jour depuis 48 h, figée pour la journée. Appréciation selon l'écart : 🎯 Dans le mille (≤ 0,5 ct), 🔥 Brûlant (≤ 2 ct), ♨️ Chaud (≤ 5 ct), 🙂 Tiède (≤ 10 ct), 🧊 Froid.
+- **🚗 Quiz auto** : une question sur la voiture, la conduite ou le carburant ([`app/Detour/Game/questions.php`](app/Detour/Game/questions.php), 30 questions), avec l'explication après la réponse.
+
+Les réponses restent sur le serveur : la page ne les contient pas, on les obtient en jouant. Le résultat se partage façon Wordle.
 
 ## Lancer en local
 
@@ -65,12 +76,14 @@ Le calcul vit dans [`app/Detour/GainCalculator.php`](app/Detour/GainCalculator.p
 app/Detour/              GainCalculator (le calcul, sans dépendance), Gain, Station, Fuel
 app/Detour/Api/          Clients des trois API (prix, adresses, itinéraires), avec cache et messages d'erreur
 app/Detour/Search/       DetourSearch (candidates, détours, référence, classement) et ses objets
-app/Http/Controllers/    HomeController (vitrine), SearchController (recherche, suggestions d'adresses)
+app/Detour/Game/         Jeu du jour : DailyPrice (le juste prix), DailyQuiz et ses questions
+app/Http/Controllers/    HomeController (vitrine), SearchController (recherche, adresses), GameController (jeu du jour)
 app/Support/Format.php   Montants et prix à la française
 resources/views/         layouts/app (en-tête, aperçu de lien, pied de page), home, search
 resources/js/search.js   Suggestions d'adresses, position, profil retenu, carte Leaflet
+resources/js/game.js     Jeu du jour : tentative, série, partage
 resources/css/app.css    Les styles (sans framework CSS)
-tests/                   Unit : le calcul ; Feature : la vitrine et la recherche (API simulées)
+tests/                   Unit : le calcul ; Feature : la vitrine, la recherche et le jeu (API simulées)
 ```
 
 ## Mise en ligne

@@ -60,6 +60,14 @@ Les applis de carburant montrent la station la moins chère… sans dire si le d
 - **Trajet** : 150 km au plus à vol d'oiseau ; au-delà, c'est le bonus « long trajet ».
 - **Itinéraires** : 40 stations au plus envoyées à OSRM (présélection par coût estimé, plus les plus proches).
 - **Cache** : les données brutes des API sont mises en cache (Laravel 13 refuse de relire des objets PHP depuis le cache).
+- **Départ seul** : chaque station ne paie que le trajet en plus de celui de la référence (la plus proche, à défaut d'une station sur le trajet).
+- **Carte** : seulement les meilleures stations (5 rentables au plus et la référence) ; la liste les garde toutes.
+
+### Jeu du jour (ajouté)
+
+- **Le juste prix** : deviner le prix moyen national du gazole du jour (moyenne des stations mises à jour depuis 48 h, figée pour la journée). Appréciation selon l'écart en centimes.
+- **Quiz auto** : une question par jour sur la voiture, la conduite et le carburant, avec l'explication.
+- Une tentative par jeu et par jour, série et partage, sans compte ; les réponses sont vérifiées par le serveur.
 
 ## 5. Critères de réussite
 

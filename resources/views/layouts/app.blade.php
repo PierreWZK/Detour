@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Détour · Le plein moins cher, détour compris')</title>
     <meta name="description" content="{{ $description }}">
     <meta name="theme-color" content="#14171c">
@@ -36,6 +37,7 @@
                 <a href="{{ route('home') }}#comment">Comment ça marche</a>
                 <a href="{{ route('home') }}#calcul">Le calcul</a>
                 <a href="{{ route('home') }}#donnees">Les données</a>
+                <a href="{{ route('game') }}">🔥 Jeu du jour</a>
             </nav>
             <a href="{{ route('search') }}" class="btn small">Trouver ma station</a>
         </div>
