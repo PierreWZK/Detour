@@ -158,6 +158,26 @@
         </ul>
     </section>
 
+    {{-- Le jeu du jour --}}
+    <section class="band container game-teaser" id="jeu">
+        <div class="section-head">
+            <p class="eyebrow">Jeu du jour</p>
+            <h2>Deux défis par jour, même sans faire le plein</h2>
+            <p class="lead">Le même pour tout le monde, une tentative chacun, une série 🔥 à faire durer. Sans compte.</p>
+            <a href="{{ route('game') }}" class="btn">🔥 Jouer au jeu du jour</a>
+        </div>
+        <div class="teaser-cards">
+            <a href="{{ route('game') }}" class="card">
+                <span class="teaser-icon" aria-hidden="true">⛽</span>
+                <div><h3>Le juste prix</h3><p class="muted">Devinez le prix moyen du gazole en France aujourd'hui, au centime près.</p></div>
+            </a>
+            <a href="{{ route('game') }}" class="card">
+                <span class="teaser-icon" aria-hidden="true">🚗</span>
+                <div><h3>Quiz auto</h3><p class="muted">Une question sur la voiture, la conduite ou le carburant, et l'explication.</p></div>
+            </a>
+        </div>
+    </section>
+
     {{-- Appel final --}}
     <section class="band container">
         <div class="cta card">

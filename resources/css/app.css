@@ -66,6 +66,9 @@ p { margin: 0 0 .75rem; }
 .nav-links { display: flex; gap: .25rem; margin-left: auto; }
 .nav-links a { color: var(--muted); text-decoration: none; padding: .4rem .7rem; border-radius: 8px; font-weight: 500; }
 .nav-links a:hover { color: var(--ink); background: var(--surface-2); }
+.nav-game { color: var(--sign); text-decoration: none; font-weight: 700; padding: .4rem .7rem; border-radius: 8px; white-space: nowrap; }
+.nav-game:hover, .nav-game.active { background: #ffc93c1f; }
+.short { display: none; }
 
 /* En-tête */
 .hero { display: grid; grid-template-columns: 1.25fr 1fr; gap: clamp(1.5rem, 5vw, 4rem); align-items: center; padding-block: clamp(2rem, 7vw, 5rem); }
@@ -122,6 +125,16 @@ p { margin: 0 0 .75rem; }
 /* Données */
 .sources { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 1rem; }
 .sources p { margin: 0; }
+
+/* Jeu du jour sur la vitrine */
+.game-teaser { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: center; }
+.game-teaser .section-head { margin-bottom: 0; }
+.teaser-cards { display: grid; gap: .75rem; }
+.teaser-cards .card { display: flex; gap: 1rem; align-items: flex-start; text-decoration: none; color: inherit; transition: border-color .15s; }
+.teaser-cards .card:hover { border-color: var(--sign); }
+.teaser-cards .card p { margin: .2rem 0 0; }
+.teaser-icon { font-size: 1.6rem; width: 3rem; height: 3rem; flex: none; display: grid; place-items: center; background: var(--surface-2); border-radius: 12px; }
+@media (max-width: 860px) { .game-teaser { grid-template-columns: 1fr; } }
 
 /* Appel final */
 .cta { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; border: 2px dashed var(--sign); background: repeating-linear-gradient(-45deg, #ffc93c0a 0 18px, transparent 18px 36px), var(--surface); }
@@ -250,5 +263,12 @@ button.btn:disabled { opacity: .6; cursor: default; }
     .station-figures { grid-column: 2; text-align: left; }
     .station-gain { grid-column: 3; grid-row: 1 / span 2; }
     .nav-links { display: none; }
-    .nav-inner .btn { margin-left: auto; }
+    .nav-inner { gap: .5rem; }
+    .nav-game { margin-left: auto; }
+    .nav-inner .btn { white-space: nowrap; }
+}
+@media (max-width: 480px) {
+    .long { display: none; }
+    .short { display: inline; }
+    .brand { font-size: 1.35rem; }
 }

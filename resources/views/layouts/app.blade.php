@@ -57,9 +57,9 @@
                 <a href="{{ route('home') }}#comment">Comment ça marche</a>
                 <a href="{{ route('home') }}#calcul">Le calcul</a>
                 <a href="{{ route('home') }}#donnees">Les données</a>
-                <a href="{{ route('game') }}">🔥 Jeu du jour</a>
             </nav>
-            <a href="{{ route('search') }}" class="btn small">Trouver ma station</a>
+            <a href="{{ route('game') }}" @class(['nav-game', 'active' => request()->routeIs('game')])>🔥 <span class="long">Jeu du jour</span><span class="short">Jeu</span></a>
+            <a href="{{ route('search') }}" class="btn small"><span class="long">Trouver ma station</span><span class="short">Ma station</span></a>
         </div>
     </header>
 
