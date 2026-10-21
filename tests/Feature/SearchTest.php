@@ -51,8 +51,19 @@ class SearchTest extends TestCase
         $response->assertOk()
             ->assertSee('Allez à')
             ->assertSee('Le meilleur choix')
-            // Proche : 1,60 € d'économie − 0,117 L × 1,759 € = +1,39 € ; lointaine : 3,20 − 1,17 × 1,719 = +1,19 €
-            ->assertSeeInOrder(['Avenue Proche', '+1,39', 'Zone Lointaine', '+1,19', 'Rue De La Route', 'Référence']);
+            // Chaque station paie le trajet en plus de la référence (0,6 km aller-retour) :
+            // proche : 1,60 € − (1,8 − 0,6) km × 6,5 L/100 × 1,759 € = +1,46 € ; lointaine : 3,20 − 17,4 km × 0,065 × 1,719 = +1,26 €
+            ->assertSeeInOrder(['Avenue Proche', '+1,46', 'Zone Lointaine', '+1,26', 'Rue De La Route', 'Référence']);
+    }
+
+    public function test_la_carte_ne_montre_que_les_meilleures_stations(): void
+    {
+        $page = $this->get('/recherche?depart=Annecy&depart_lat=45.9&depart_lon=6.12')->getContent();
+        preg_match('#<script type="application/json" id="map-data">(.+?)</script>#s', $page, $m);
+        $ids = array_column(json_decode($m[1], true)['stations'], 'id');
+
+        // Les deux stations rentables et la référence
+        $this->assertEqualsCanonicalizing(['N', 'F', 'R'], $ids);
     }
 
     public function test_le_temps_peut_rendre_le_detour_lointain_perdant(): void

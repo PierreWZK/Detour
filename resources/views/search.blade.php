@@ -11,6 +11,18 @@
     // La référence est « sur le trajet » si son détour ne dépasse pas 1 km, sinon c'est la plus proche
     $referencePlace = $result?->reference && $result->reference->detourKm <= App\Detour\Search\DetourSearch::ON_ROUTE_KM
         ? 'sur votre trajet' : 'à la station la plus proche';
+    $referenceOnRoute = $referencePlace === 'sur votre trajet';
+    $extraLabel = $referenceOnRoute ? 'de détour' : 'de plus qu\'à la station la plus proche';
+
+    // La carte ne montre que les meilleures stations : celles qui rapportent (5 au plus) et la référence ;
+    // si aucune ne rapporte, la référence et les deux suivantes. La liste, elle, les garde toutes.
+    $onMap = [];
+    if ($result && $result->candidates) {
+        $winners = array_slice(array_values(array_filter($result->candidates, fn ($c) => ! $c->isReference && $c->gain->net > 0)), 0, 5);
+        $onMap = $winners !== []
+            ? [...$winners, $result->reference]
+            : array_slice($result->candidates, 0, 3);
+    }
     $fuel = Fuel::from($form['carburant']);
 
     // Lien d'itinéraire (Google Maps, qui s'ouvre aussi dans l'application sur mobile)
@@ -39,7 +51,7 @@
             'gain' => $c->isReference ? 'Référence' : Format::signedEuros($c->gain->net),
             'detour' => $c->detourKm > 0 ? Format::km($c->detourKm).' · '.(int) $c->detourMinutes.' min' : 'Sur le trajet',
             'kind' => $c === $best && $result->detourWorthIt() ? 'best' : ($c->isReference ? 'reference' : ($c->gain->net > 0 ? 'good' : 'bad')),
-        ], $result->candidates),
+        ], $onMap),
     ] : null;
 @endphp
 
@@ -127,10 +139,10 @@
                     @if ($result->detourWorthIt())
                         <p class="verdict-text">Allez à <strong>{{ $best->station->label() }}</strong> :
                             <span class="good">{{ Format::signedEuros($best->gain->net) }} net</span>
-                            pour {{ (int) $best->detourMinutes }} minute{{ $best->detourMinutes >= 2 ? 's' : '' }} de détour.</p>
+                            pour {{ (int) $best->extraMinutes }} minute{{ $best->extraMinutes >= 2 ? 's' : '' }} {{ $extraLabel }}.</p>
                         <p class="muted small">
                             {{ Format::pricePerLiter($best->price) }} contre {{ Format::pricePerLiter($result->reference->price) }} {{ $referencePlace }} ·
-                            {{ Format::km($best->detourKm) }} de détour
+                            {{ Format::km($best->extraKm) }} {{ $extraLabel }}
                             @if ($best->gain->breakEvenLiters) · rentable dès {{ $best->gain->breakEvenLiters }} litres @endif
                         </p>
                     @else
@@ -142,6 +154,10 @@
 
                 <div class="map card" id="map" aria-label="Carte des stations"></div>
                 <script type="application/json" id="map-data">@json($map)</script>
+                <p class="map-legend muted small">
+                    <span class="dot best"></span> le meilleur choix <span class="dot good"></span> rentable <span class="dot reference"></span> la référence
+                    · la carte ne montre que les meilleures stations, la liste les reprend toutes.
+                </p>
 
                 <p class="results-head">
                     <strong>{{ count($result->candidates) }} stations</strong> · {{ $fuel->label() }} · {{ (float) $form['litres'] }} L ·
@@ -180,9 +196,9 @@
                                     @unless ($c->isReference)
                                         <dl class="breakdown">
                                             <div><dt>Économie sur {{ (float) $form['litres'] }} L</dt><dd>{{ Format::signedEuros($c->gain->saving) }}</dd></div>
-                                            <div><dt>Carburant du détour ({{ number_format($c->gain->burnedLiters, 2, ',', '') }} L)</dt><dd>{{ Format::signedEuros(-$c->gain->fuelCost) }}</dd></div>
+                                            <div><dt>Carburant pour {{ Format::km($c->extraKm) }} {{ $extraLabel }} ({{ number_format($c->gain->burnedLiters, 2, ',', '') }} L)</dt><dd>{{ Format::signedEuros(-$c->gain->fuelCost) }}</dd></div>
                                             @if ($c->gain->timeCost > 0)
-                                                <div><dt>Temps ({{ (int) $c->detourMinutes }} min)</dt><dd>{{ Format::signedEuros(-$c->gain->timeCost) }}</dd></div>
+                                                <div><dt>Temps ({{ (int) $c->extraMinutes }} min {{ $referenceOnRoute ? 'de détour' : 'de plus' }})</dt><dd>{{ Format::signedEuros(-$c->gain->timeCost) }}</dd></div>
                                             @endif
                                             <div class="total"><dt>Gain net</dt><dd>{{ Format::signedEuros($c->gain->net) }}</dd></div>
                                             <div><dt>Rentable dès</dt><dd>{{ $c->gain->breakEvenLiters !== null ? $c->gain->breakEvenLiters.' L' : 'jamais' }}</dd></div>

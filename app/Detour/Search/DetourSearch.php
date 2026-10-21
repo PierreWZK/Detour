@@ -55,16 +55,22 @@ final class DetourSearch
 
         $candidates = array_map(function (array $d) use ($query, $reference, $referencePrice, $now) {
             $isReference = $d === $reference;
+            // Chaque station ne paie que le trajet en plus de celui de la référence : sans destination,
+            // il faut de toute façon faire l'aller-retour jusqu'à la station la plus proche
+            $extraKm = max(0, $d['km'] - $reference['km']);
+            $extraMinutes = max(0, $d['minutes'] - $reference['minutes']);
 
             return new Candidate(
                 station: $d['station'],
                 price: $d['price'],
                 detourKm: round($d['km'], 1),
                 detourMinutes: round($d['minutes']),
-                // La référence est sur le trajet : c'est le point de comparaison, son gain vaut 0
+                extraKm: round($extraKm, 1),
+                extraMinutes: round($extraMinutes),
+                // La référence est le point de comparaison : son gain vaut 0
                 gain: $isReference
                     ? $this->calculator->gain($referencePrice, $referencePrice, $query->liters, $query->consumption, 0)
-                    : $this->calculator->gain($referencePrice, $d['price'], $query->liters, $query->consumption, $d['km'], $d['minutes'], $query->hourValue),
+                    : $this->calculator->gain($referencePrice, $d['price'], $query->liters, $query->consumption, $extraKm, $extraMinutes, $query->hourValue),
                 isReference: $isReference,
                 isStale: $d['station']->isStale($query->fuel, $now),
             );
