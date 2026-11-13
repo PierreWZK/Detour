@@ -1,8 +1,14 @@
 # Détour · Le plein moins cher, détour compris
 
-> Jour 08 du défi **30 jours, 30 projets** · Laravel · Leaflet · Open data · 🟢 **En ligne : [detour.projectp.fr](https://detour.projectp.fr)**
+🌐 **[detour.projectp.fr](https://detour.projectp.fr/)** · Jour 08 du défi **[30 jours, 30 projets](https://projectp.fr/)** · [Dépôt du défi](https://github.com/PierreWZK/30DaysProjects)
 
-![Page d'accueil de Détour](docs/preview.png)
+Stack : Laravel, Leaflet, open data.
+
+[![Page d'accueil de Détour](docs/preview-accueil.png)](https://detour.projectp.fr/)
+
+<p align="center">
+  <img src="docs/preview-mobile.png" alt="Détour sur téléphone" width="260">
+</p>
 
 Les applis de carburant montrent la station la moins chère… sans dire si le détour vaut le coup. **Détour** calcule le **gain net** de chaque station : l'économie sur le plein, moins le carburant brûlé (et, si on veut, le temps perdu) pour y aller. Il répond simplement : « Allez à 18 bd de la Rocade, Annecy : +2,93 € net pour 10 minutes de détour ».
 
@@ -104,3 +110,14 @@ Pas de base de données : le cache (prix, itinéraires, juste prix du jour) est 
 ## Stack
 
 Laravel · Leaflet · Open data.
+
+---
+
+## Le défi 30 jours, 30 projets
+
+Un projet complet par jour pendant 30 jours, chacun en ligne sur son propre sous-domaine.
+
+- 🗂️ **Tous les projets** : [projectp.fr](https://projectp.fr/)
+- 💻 **Le dépôt du défi** : [github.com/PierreWZK/30DaysProjects](https://github.com/PierreWZK/30DaysProjects)
+- ⬅️ **Jour précédent** : [Pécule, tableau de dépenses](https://pecule.projectp.fr/)
+- ➡️ **Jour suivant** : [Vis-à-vis, comparateur de voitures](https://visavis.projectp.fr/)
